@@ -1,4 +1,3 @@
-import datetime
 from scapy.all import *
 from scapy.layers.inet import IP, ICMP, UDP, TCP
 
@@ -19,10 +18,7 @@ def process_packet(packet):
         type_flag = b''
         status_code = b''
         cache_control = b''
-        data = b''
-
-        # if raw in packet:
-        #     cache_flag = packet[raw].load
+        data = ''
 
         if packet.haslayer(TCP):
             cache_flag = packet[TCP].flags.C
@@ -30,10 +26,9 @@ def process_packet(packet):
             type_flag = packet[TCP].flags.U
             status_code = packet[TCP].flags.A
             cache_control = packet[TCP].flags.P
-            if hasattr(packet.payload, 'hexdump'):  # Check if hexdump method is available
-                data = packet.payload.hexdump()  # Use hexdump instead of hex
-            else:
-                data = ''  # Set a default value or handle it according to your requirements
+
+        if hasattr(packet.payload, 'hexdump'):
+            data = packet.payload.hexdump()
 
         packet_info = {
             "source_ip": source_ip,
@@ -58,6 +53,6 @@ def print_the_whole_pkt(pkt):
 
 
 if __name__ == '__main__':
-    # filter = "tcp and udp and icmp and igmp"
+    filter = "tcp or udp or icmp or igmp"
     # pkt = sniff(filter=filter, prn=print_the_whole_pkt, count = 10)
-    sniff(filter="tcp", prn=process_packet)
+    sniff(filter=filter, prn=process_packet)
