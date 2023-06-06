@@ -1,4 +1,6 @@
 from scapy.all import *
+from scapy.layers.inet import ICMP, IP
+
 
 def traceroute(destination):
     ttl = 1
@@ -31,7 +33,7 @@ def traceroute(destination):
 
 
 # Specify the destination IP address or domain name
-destination = "www.example.com"  # Replace with your desired destination
+destination = "www.google.com"
 
 # Perform traceroute
 traceroute(destination)

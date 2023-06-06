@@ -48,7 +48,3 @@ spoof_udp(target_ip, target_port, source_ip, source_port)
 
 # Spoof TCP packet
 spoof_tcp(target_ip, target_port, source_ip, source_port)
-
-
-# if __name__ == '__main__':
-#     print('PyCharm')
